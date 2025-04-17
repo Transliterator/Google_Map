@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wild Travel</title>
+    <style>
+        body {
+            font-family: 'Trebuchet MS', sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background-color: #f0f8ff;
+            color: #003366;
+            overflow: hidden;
+        }
+        h1 {
+            font-size: 48px;
+            color: #FF4500;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeIn 2s forwards;
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #FF4500;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+            opacity: 0;
+            animation: fadeIn 2s forwards;
+            animation-delay: 1s;
+        }
+        button:hover {
+            background-color: #e03e00;
+        }
+        p {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+        .background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background-size: cover;
+            animation: slideIn 3s forwards;
+        }
+    </style>
+</head>
+<body>
+    <h1>Wild Travel</h1>
+    <button onclick="generateCoordinates()">Generate Coordinates</button>
+    <p id="coordinates"></p>
+    <button id="mapButton" style="display:none;" onclick="showOnMap()">Show on Map</button>
+
+    <div id="background" class="background"></div>
+
+    <script>
+        const images = [
+            'url("mountains.jpg")',
+            'url("sea.jpg")',
+            'url("arctic.jpg")',
+            'url("equator.jpg")'
+        ];
+
+        function generateCoordinates() {
+            const latitude = (Math.random() * 180 - 90).toFixed(6);
+            const longitude = (Math.random() * 360 - 180).toFixed(6);
+            const coordinates = `${latitude}, ${longitude}`;
+
+            document.getElementById('coordinates').textContent = coordinates;
+            document.getElementById('mapButton').style.display = 'inline-block';
+            document.getElementById('mapButton').style.animation = 'fadeIn 2s forwards';
+            document.getElementById('mapButton').style.animationDelay = '1s';
+
+            const randomImage = images[Math.floor(Math.random() * images.length)];
+            document.getElementById('background').style.backgroundImage = randomImage;
+        }
+
+        function showOnMap() {
+            const coordinates = document.getElementById('coordinates').textContent.split(', ');
+            const latitude = coordinates[0];
+            const longitude = coordinates[1];
+            const url = `https://www.google.com/maps?q=${latitude},${longitude}&hl=en`;
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>
